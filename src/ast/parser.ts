@@ -34,7 +34,7 @@ class Parser {
                 return { kind: "NumericLiteral", value: Number(token.value) } as NumericLiteral;
             case TokenType.OPEN_PAREN:
                 const expr = this.parseExpr();
-                this.eat();
+                this.eat(); // TODO: This should implement a check before eating the token and throw a parsing error if no closing paranthesis was found.
                 return expr;
             default:
                 console.error("Invalid primary expression detected:", token.value);
