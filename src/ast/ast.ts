@@ -15,6 +15,7 @@ export interface Program extends Stmt {
     body: Stmt[];
 }
 
+// TODO: This definition implies that an expression IS A statement and this is not true. So I should find some other way to represent expressions.
 export interface Expr extends Stmt { };
 
 export interface NumericLiteral extends Expr {
