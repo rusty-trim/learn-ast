@@ -1,7 +1,7 @@
-import type { BinaryExpr, Expr, Identifier, NumericLiteral, Program, Stmt } from "./ast.ts";
+import type { BinaryExpr, Expr, ExprStmt, Identifier, NumericLiteral, Program, Stmt } from "./ast.ts";
 import { tokenize, TokenType, type Token } from "./lexer.ts";
 
-class Parser {
+export class Parser {
     private tokens: Token[] = [];
     private current = 0;
 
@@ -15,9 +15,12 @@ class Parser {
         return token;
     }
 
-    private parseStmt() {
+    private parseStmt(): ExprStmt {
         // Not handling statements yet, so skip to parse expressions.
-        return this.parseExpr();
+        return {
+            kind: "ExprStmt",
+            expression: this.parseExpr()
+        };
     }
 
     private parseExpr() {
@@ -94,6 +97,3 @@ class Parser {
         return program;
     }
 }
-
-const parser = new Parser();
-console.log(JSON.stringify(parser.produceAST("let x = 5"), null, 2));
