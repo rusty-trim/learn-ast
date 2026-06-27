@@ -1,4 +1,4 @@
-import type { BinaryExpr, Expr, ExprStmt, Identifier, NumericLiteral, Program } from "./ast.ts";
+import type { BinaryExpr, Expr, ExprStmt, Identifier, NullLiteral, NumericLiteral, Program } from "./ast.ts";
 import { tokenize, TokenType, type Token, type TokenTypeValue } from "./lexer.ts";
 
 export class Parser {
@@ -46,6 +46,8 @@ export class Parser {
                 return { kind: "Identifier", value: token.value } as Identifier;
             case TokenType.NUMBER:
                 return { kind: "NumericLiteral", value: Number(token.value) } as NumericLiteral;
+            case TokenType.NULL:
+                return { kind: "NullLiteral", value: token.value } as NullLiteral;
             case TokenType.OPEN_PAREN:
                 const expr = this.parseExpr();
                 this.expect(TokenType.CLOSE_PAREN, `Expected ) but did not find it.`);

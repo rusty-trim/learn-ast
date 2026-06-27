@@ -2,6 +2,7 @@ type NodeType =
     | "Program"
     | "ExprStmt"
     | "NumericLiteral"
+    | "NullLiteral"
     | "Identifier"
     | "BinaryExpr"
 
@@ -26,6 +27,11 @@ export interface Expr extends AstNode { };
 export interface NumericLiteral extends Expr {
     kind: "NumericLiteral";
     value: number;
+}
+
+export interface NullLiteral extends Expr {
+    kind: "NullLiteral";
+    value: string;
 }
 
 export interface Identifier extends Expr {

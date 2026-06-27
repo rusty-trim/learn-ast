@@ -150,6 +150,7 @@ export function tokenize(sourceCode: string) {
                             break;
                         case Keywords.NULL:
                             tokens.push({ type: TokenType.NULL, value: word });
+                            break;
                         default:
                             tokens.push({ type: TokenType.IDENTIFIER, value: word });
                             break;
