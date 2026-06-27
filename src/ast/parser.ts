@@ -1,5 +1,5 @@
-import type { BinaryExpr, Expr, ExprStmt, Identifier, NumericLiteral, Program, Stmt } from "./ast.ts";
-import { tokenize, TokenType, type Token } from "./lexer.ts";
+import type { BinaryExpr, Expr, ExprStmt, Identifier, NumericLiteral, Program } from "./ast.ts";
+import { tokenize, TokenType, type Token, type TokenTypeValue } from "./lexer.ts";
 
 export class Parser {
     private tokens: Token[] = [];
@@ -13,6 +13,17 @@ export class Parser {
         const token = this.tokens[this.current]!;
         this.current++;
         return token;
+    }
+
+    private expect(tokenType: TokenTypeValue, error: string) {
+        const check = this.eat();
+
+        if (check.type != tokenType) {
+            console.error("Parsing error:", error);
+            process.exit();
+        }
+
+        return check;
     }
 
     private parseStmt(): ExprStmt {
@@ -37,7 +48,7 @@ export class Parser {
                 return { kind: "NumericLiteral", value: Number(token.value) } as NumericLiteral;
             case TokenType.OPEN_PAREN:
                 const expr = this.parseExpr();
-                this.eat(); // TODO: This should implement a check before eating the token and throw a parsing error if no closing paranthesis was found.
+                this.expect(TokenType.CLOSE_PAREN, `Expected ) but did not find it.`);
                 return expr;
             default:
                 console.error("Invalid primary expression detected:", token.value);

@@ -5,6 +5,7 @@ export const TokenType = {
 
     IDENTIFIER: "Identifier",
     NUMBER: "Number",
+    NULL: "Null",
 
     ASSIGN: "Assign",
 
@@ -30,10 +31,11 @@ export const TokenType = {
 
 const Keywords = {
     "LET": "let",
-    "CONST": "const"
+    "CONST": "const",
+    "NULL": "null",
 } as const;
 
-type TokenTypeValue =
+export type TokenTypeValue =
     typeof TokenType[keyof typeof TokenType];
 
 export interface Token {
@@ -146,6 +148,8 @@ export function tokenize(sourceCode: string) {
                         case Keywords.CONST:
                             tokens.push({ type: TokenType.CONST, value: word });
                             break;
+                        case Keywords.NULL:
+                            tokens.push({ type: TokenType.NULL, value: word });
                         default:
                             tokens.push({ type: TokenType.IDENTIFIER, value: word });
                             break;
